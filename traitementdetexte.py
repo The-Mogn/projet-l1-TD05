@@ -3,16 +3,32 @@ class text :
     def __init__(self, text : str) -> None:
         self._text = text
 
-    def remove_accents_special_characters(self) :
+    def treat_text(self) :
         final_text = ""
         for character in self._text :
             if character.isalnum() == True and re.match('^[a-zA-Z_]+$', character):
                 final_text += character
-        self._text = final_text
+        self._treated_text = final_text.upper()   
 
-    def upper(self) :
-        self._text = self._text.upper()    
-
+    def chiffrer_cesar(self) :
+        alphabet = "ABCDEFGHIJKLMNOPQRSTUVWXYZ"
+        self.treat_text()
+        text_cesar = ""
+        for letter in self._treated_text :
+            text_cesar += alphabet[(alphabet.index(letter) + 3) % 26]
+        self._text_cesar = text_cesar
+        return text_cesar    
+    
+    def chiffrer_vigenere(self, key) :
+        alphabet = "ABCDEFGHIJKLMNOPQRSTUVWXYZ"
+        self.treat_text()
+        text_vigenere = ""
+        for i in range(len(self._treated_text)) :
+            text_vigenere += alphabet[(alphabet.index(self._treated_text[i]) + alphabet.index(key[i])) % 25]
+        self._text_vigenere = text_vigenere
+        self._key_vigenere = key
+        return text_vigenere
+        
 
 def get_sentences(text) :
     sentences1 = text.split(".")
@@ -37,6 +53,7 @@ def sentence_in_common(text1, text2) :
 def get_text(path) :
     with open(path, mode='r') as file :
         return file.read()
+        
 
-# print(get_text("C:/Users/const/OneDrive/Bureau/Cours UVSQ S1/Info/projet-l1-TD05/text.txt"))
-
+# my_text = text("zonjour !")
+# print(my_text.chiffrer_cesar())
