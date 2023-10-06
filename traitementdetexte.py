@@ -1,4 +1,5 @@
 import re
+import os
 
 def treat_text(text) :
         final_text = ""
@@ -89,10 +90,15 @@ def sentence_in_common(text1, text2) :
 def get_text(path) :
     with open(path, mode='r') as file :
         return file.read()
+    
+def rewrite_text(path, text) :
+    with open(path, mode='w') as file :
+        file.truncate()   
+        file.write(text) 
         
 
 my_text = text("Bonjour !")
-new_text = my_text.chiffrer_vigenere("fdp")
-print(new_text)
 
 
+current_folder = os.path.dirname(os.path.abspath(__file__))
+rewrite_text(f"{current_folder}/text.txt")
