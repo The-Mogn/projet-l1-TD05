@@ -1,4 +1,11 @@
 import re
+
+def treat_text(text) :
+        final_text = ""
+        for character in text :
+            if character.isalnum() == True and re.match('^[a-zA-Z_]+$', character):
+                final_text += character
+        return final_text.upper() 
 class text :
     def __init__(self, text : str) -> None:
         self._text = text
@@ -23,8 +30,37 @@ class text :
         alphabet = "ABCDEFGHIJKLMNOPQRSTUVWXYZ"
         self.treat_text()
         text_vigenere = ""
+        key = treat_text(key)
+        len_key = len(key)
+        while len(key) < len(self._treated_text):
+            key += key[len(key) - len_key]
+        print(key)  
         for i in range(len(self._treated_text)) :
             text_vigenere += alphabet[(alphabet.index(self._treated_text[i]) + alphabet.index(key[i])) % 25]
+        self._text_vigenere = text_vigenere
+        self._key_vigenere = key
+        return text_vigenere
+    
+    def dechiffrer_cesar(self) :
+        alphabet = "ABCDEFGHIJKLMNOPQRSTUVWXYZ"
+        self.treat_text()
+        new_text = ""
+        for letter in self._treated_text :
+            new_text += alphabet[(alphabet.index(letter) - 3) % 26]
+        self._decrypted_cesar = new_text
+        return new_text
+    
+    def dechiffrer_vigenere(self, key) :
+        alphabet = "ABCDEFGHIJKLMNOPQRSTUVWXYZ"
+        self.treat_text()
+        text_vigenere = ""
+        key = treat_text(key)
+        len_key = len(key)
+        while len(key) < len(self._treated_text):
+            key += key[len(key) - len_key]
+        print(key)  
+        for i in range(len(self._treated_text)) :
+            text_vigenere += alphabet[(alphabet.index(self._treated_text[i]) - alphabet.index(key[i])) % 25]
         self._text_vigenere = text_vigenere
         self._key_vigenere = key
         return text_vigenere
@@ -55,5 +91,8 @@ def get_text(path) :
         return file.read()
         
 
-# my_text = text("zonjour !")
-# print(my_text.chiffrer_cesar())
+my_text = text("Bonjour !")
+new_text = my_text.chiffrer_vigenere("fdp")
+print(new_text)
+
+
