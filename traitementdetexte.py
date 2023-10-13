@@ -17,6 +17,7 @@ class text :
             if character.isalnum() == True and re.match('^[a-zA-Z_]+$', character):
                 final_text += character
         self._treated_text = final_text.upper()   
+        return final_text.upper()
 
     def chiffrer_cesar(self) :
         alphabet = "ABCDEFGHIJKLMNOPQRSTUVWXYZ"
@@ -97,8 +98,8 @@ def rewrite_text(path, text) :
         file.write(text) 
         
 
-my_text = text("Bonjour !")
+# my_text = text("Bonjour !")
 
 
-current_folder = os.path.dirname(os.path.abspath(__file__))
-rewrite_text(f"{current_folder}/text.txt")
+# current_folder = os.path.dirname(os.path.abspath(__file__))
+# rewrite_text(f"{current_folder}/text.txt", "connard")
